@@ -7,4 +7,4 @@ define("STORAGE_PATH", "assets/");
 define('TELEGRAM_BOT_TOKEN', '<YOUR_BOT_TOKEN>');
 define('TELEGRAM_WEBHOOK_URL', 'https://yourdomain.com/telegram-webhook.php');
 define('TELEGRAM_WEBHOOK_SECRET_TOKEN', '<YOUR_SECRET>');
-define('TELEGRAM_DEV_CHAT_ID', '<YOUR_CHAT_ID>');
+define('TELEGRAM_DEV_CHAT_ID', '<YOUR_CHAT_ID>'); // Need to send errors and logs
