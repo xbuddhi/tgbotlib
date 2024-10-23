@@ -24,13 +24,13 @@ A custom Telegram bot library that handles commands, state-based conversations, 
 
    ```bash
    git clone https://github.com/xbuddhi/tgbotlib.git
-   cd telegram-bot-library
+   cd tgbotlib
    ```
 
 2. Install the necessary dependencies (e.g., cURL):
 
    ```bash
-   sudo apt-get install php-curl
+   sudo apt-get install php-curl 
    ```
 
 3. Rename `config.php.template` to `config.php` and set up your configuration in `config.php`:
