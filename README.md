@@ -23,7 +23,7 @@ A custom Telegram bot library that handles commands, state-based conversations, 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/telegram-bot-library.git
+   git clone https://github.com/xbuddhi/tgbotlib.git
    cd telegram-bot-library
    ```
 
