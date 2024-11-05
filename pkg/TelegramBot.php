@@ -4,9 +4,9 @@ ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(E_ALL);
 date_default_timezone_set('Asia/Colombo');
-// throw new Exception('Test Exception');
 set_error_handler("telegramErrorHandler");
 require_once "config.php";
+
 function telegramErrorHandler($errno, $errstr, $errfile, $errline)
 {
     try {
@@ -247,6 +247,11 @@ class TelegramBot {
         $this->saveUserData();
     }
 
+    // Get All Users Data
+    public function getAllUserData(): array {
+        return $this->userData;
+    }
+
     // Load user data from storage
     private function loadUserData(): void {
         if (file_exists($this->storagePath . 'user_data.json')) {
@@ -383,7 +388,7 @@ class TelegramBot {
         $logMessage = "[{$date}] [{$level}] {$message}" . PHP_EOL;
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     }
-    
+
     // Deletes a specific message from a chat
     public function deleteMessage(int $chatId, int $messageId): array {
         $params = [
