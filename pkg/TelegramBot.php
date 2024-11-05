@@ -67,6 +67,7 @@ function sendMessage($chatId, $text, $replyToMessageId = null, $messageThreadID 
 
 class TelegramBot {
     private string $token;
+    private bool $rawMode=true;
     private string $storagePath = 'assets/';
     private string $logsPath = 'logs/';
     private array $states = [];
@@ -125,7 +126,8 @@ class TelegramBot {
         }
     }
     
-    public function __construct() {
+    public function __construct(bool $rawMode=false) {
+        $this->rawMode=$rawMode;
         $this->token = TELEGRAM_BOT_TOKEN;
         $this->loadStates();
         $this->loadUserData();
@@ -150,7 +152,9 @@ class TelegramBot {
     // Handles incoming updates (commands or state-based messages)
     public function handleUpdate(): void {
         $update = json_decode(file_get_contents('php://input'), true);
-
+        if ($this->rawMode && defined('TELEGRAM_DEV_CHAT_ID')) {
+                $this->sendMessage(TELEGRAM_DEV_CHAT_ID, "```" . json_encode($update) . "```");
+        }
         if (isset($update['callback_query'])) {
             $this->handleCallbackQuery($update['callback_query']);
         } elseif (isset($update['message'])) {
@@ -379,6 +383,16 @@ class TelegramBot {
         $logMessage = "[{$date}] [{$level}] {$message}" . PHP_EOL;
         file_put_contents($logFile, $logMessage, FILE_APPEND);
     }
+    
+    // Deletes a specific message from a chat
+    public function deleteMessage(int $chatId, int $messageId): array {
+        $params = [
+            'chat_id' => $chatId,
+            'message_id' => $messageId,
+        ];
+    
+        return $this->makeApiRequest('deleteMessage', $params);
+    }
 
     // Downloads a file from Telegram and returns the local file path
     public function downloadFile(string $fileId,string $localFilePath): ?string {
@@ -425,5 +439,5 @@ class TelegramBot {
         return json_decode($result, true) ?? [];
     }
     
-    
+
 }
